@@ -118,18 +118,18 @@ class SignInScreen extends StatelessWidget {
                   ) : const Center(child: CircularProgressIndicator()),
                   SizedBox(height: Get.find<SplashController>().configModel!.toggleDmRegistration! ? Dimensions.paddingSizeSmall : 0),
 
-                  Get.find<SplashController>().configModel!.toggleDmRegistration! ? TextButton(
-                    style: TextButton.styleFrom(
-                      minimumSize: const Size(1, 40),
-                    ),
-                    onPressed: () {
-                      Get.toNamed(RouteHelper.getDeliverymanRegistrationRoute());
-                    },
-                    child: RichText(text: TextSpan(children: [
-                      TextSpan(text: '${'join_as_a'.tr} ', style: robotoRegular.copyWith(color: Theme.of(context).disabledColor)),
-                      TextSpan(text: 'delivery_man'.tr, style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color)),
-                    ])),
-                  ) : const SizedBox(),
+                  // Get.find<SplashController>().configModel!.toggleDmRegistration! ? TextButton(
+                  //   style: TextButton.styleFrom(
+                  //     minimumSize: const Size(1, 40),
+                  //   ),
+                  //   onPressed: () {
+                  //     Get.toNamed(RouteHelper.getDeliverymanRegistrationRoute());
+                  //   },
+                  //   child: RichText(text: TextSpan(children: [
+                  //     TextSpan(text: '${'join_as_a'.tr} ', style: robotoRegular.copyWith(color: Theme.of(context).disabledColor)),
+                  //     TextSpan(text: 'delivery_man'.tr, style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color)),
+                  //   ])),
+                  // ) : const SizedBox(),
 
                 ]);
               }),
