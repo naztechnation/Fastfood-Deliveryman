@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:geolocator/geolocator.dart';
+import 'package:sixam_mart_delivery/common/widgets/modals.dart';
 import 'package:sixam_mart_delivery/features/auth/controllers/auth_controller.dart';
 import 'package:sixam_mart_delivery/features/language/controllers/language_controller.dart';
 import 'package:sixam_mart_delivery/features/splash/controllers/splash_controller.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'common/widgets/location_permision.dart';
 import 'helper/get_di.dart' as di;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -46,11 +48,16 @@ Future<void> main() async {
   runApp(MyApp(languages: languages, body: body));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final Map<String, Map<String, String>>? languages;
   final NotificationBodyModel? body;
   const MyApp({super.key, required this.languages, this.body});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   void _route() {
     Get.find<SplashController>().getConfigData().then((bool isSuccess) async {
       if (isSuccess) {
@@ -61,30 +68,9 @@ class MyApp extends StatelessWidget {
     });
   }
 
-  Future<void> _requestLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // If not enabled, prompt user to enable it
-      serviceEnabled = await Geolocator.openLocationSettings();
-      if (!serviceEnabled) {
-        return; // User canceled or could not enable location services
-      }
-    }
 
-    // Check if location permission is granted
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      // If permission is denied, request it from the user
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return;
-      }
-    }
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     if(GetPlatform.isWeb) {
@@ -92,7 +78,7 @@ class MyApp extends StatelessWidget {
       _route();
     }
 
-    _requestLocation();
+    
 
     return GetBuilder<ThemeController>(builder: (themeController) {
       return GetBuilder<LocalizationController>(builder: (localizeController) {
@@ -103,9 +89,10 @@ class MyApp extends StatelessWidget {
             navigatorKey: Get.key,
             theme: themeController.darkTheme ? dark : light,
             locale: localizeController.locale,
-            translations: Messages(languages: languages),
-            fallbackLocale: Locale(AppConstants.languages[0].languageCode!, AppConstants.languages[0].countryCode),
-            initialRoute: RouteHelper.getSplashRoute(body),
+            translations: Messages(languages: widget.languages),
+            fallbackLocale: Locale(AppConstants.languages[0].languageCode!, 
+            AppConstants.languages[0].countryCode),
+            initialRoute: RouteHelper.getSplashRoute(widget.body),
             getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
             transitionDuration: const Duration(milliseconds: 500),

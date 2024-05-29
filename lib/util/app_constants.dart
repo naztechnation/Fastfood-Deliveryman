@@ -64,6 +64,7 @@ class AppConstants {
   static const String userPassword = 'sixam_mart_delivery_user_password';
   static const String userAddress = 'sixam_mart_delivery_user_address';
   static const String userNumber = 'sixam_mart_delivery_user_number';
+  static const String isSelectLocation = 'accept_location';
   static const String userCountryCode = 'sixam_mart_delivery_user_country_code';
   static const String notification = 'sixam_mart_delivery_notification';
   static const String notificationCount = 'sixam_mart_delivery_notification_count';

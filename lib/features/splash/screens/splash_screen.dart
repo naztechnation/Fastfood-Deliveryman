@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sixam_mart_delivery/features/auth/controllers/auth_controller.dart';
 import 'package:sixam_mart_delivery/features/profile/controllers/profile_controller.dart';
 import 'package:sixam_mart_delivery/features/splash/controllers/splash_controller.dart';
@@ -24,9 +25,23 @@ class SplashScreenState extends State<SplashScreen> {
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey();
   late StreamSubscription<ConnectivityResult> _onConnectivityChanged;
 
+  SharedPreferences? sharedPreferences;
+
+  String isSetLocation = '';
+  setIsUserAcceptLocation() async {
+   sharedPreferences =
+        await SharedPreferences.getInstance();
+isSetLocation = sharedPreferences?.getString(AppConstants.isSelectLocation) ?? "";
+    setState(() {
+      
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+
+    setIsUserAcceptLocation();
 
     if(Get.find<AuthController>().isLoggedIn()) {
       Get.find<ProfileController>().getProfile();
@@ -56,6 +71,9 @@ class SplashScreenState extends State<SplashScreen> {
     _route();
 
   }
+
+ 
+
 
   @override
   void dispose() {
@@ -87,7 +105,12 @@ class SplashScreenState extends State<SplashScreen> {
               } else {
                 Get.offNamed(RouteHelper.getChatRoute(notificationBody: widget.body, conversationId: widget.body!.conversationId, fromNotification: true));
               }
-            }else {
+            }else if(isSetLocation != 'selected'){
+                Get.offNamed(RouteHelper.connfirmLocationRoute(widget.body));
+
+            }
+            
+            else {
               if (Get.find<AuthController>().isLoggedIn()) {
                 Get.find<AuthController>().updateToken();
                 await Get.find<ProfileController>().getProfile();

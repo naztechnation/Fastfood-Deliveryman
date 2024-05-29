@@ -168,7 +168,7 @@
   "this_month": "This Month",
   "next": "Next",
   "for_demo_purpose": "For demo purpose please use 1234 as OTP",
-  "this_app_collects_location_data": "This app collects location data to enable location fetching at the time of your online status, even when the app is closed or not in use.",
+  "this_app_collects_location_data": "This app collects location data to enable accurate tracking and delivery status updates. Your location will be collected even when the app is closed or not in use to ensure timely and precise delivery information.",
   "running_orders": "Running Orders",
   "terms_condition": "Terms & Condition",
   "privacy_policy": "Privacy Policy",

@@ -27,6 +27,8 @@ import 'package:sixam_mart_delivery/features/splash/screens/splash_screen.dart';
 import 'package:sixam_mart_delivery/features/update/screens/update_screen.dart';
 import 'package:get/get.dart';
 
+import '../common/widgets/location_permision.dart';
+
 class RouteHelper {
   static const String initial = '/';
   static const String splash = '/splash';
@@ -54,6 +56,7 @@ class RouteHelper {
   static const String transactionHistory = '/transaction-history';
   static const String cashInHand = '/cash-in-hand';
   static const String walletProvidedEarning = '/wallet-provided-earning';
+  static const String confirmLocation = '/confirm-location';
 
   static String getInitialRoute({bool? fromOrderDetails}) => '$initial?from_order_details=${fromOrderDetails.toString()}';
   static String getSplashRoute(NotificationBodyModel? body) {
@@ -91,6 +94,7 @@ class RouteHelper {
     return '$chatScreen?notification_body=$notificationBody0&user=$user0&conversation_id=$conversationId&from=${fromNotification.toString()}';
   }
   static String getConversationListRoute() => conversationListScreen;
+  static String connfirmLocationRoute(NotificationBodyModel? body) => confirmLocation;
   static String getDeliverymanRegistrationRoute() => deliveryManRegistration;
   static String getDisbursementRoute() => disbursement;
   static String getWithdrawMethodRoute({bool isFromDashBoard = false}) => '$withdrawMethod?is_from_dashboard=${isFromDashBoard.toString()}';
@@ -154,6 +158,7 @@ class RouteHelper {
       );
     }),
     GetPage(name: conversationListScreen, page: () => const ConversationScreen()),
+    GetPage(name: confirmLocation, page: () => const LocationPermissionScreen()),
     GetPage(name: deliveryManRegistration, page: () => const DeliveryManRegistrationScreen()),
     GetPage(name: disbursement, page: () => const DisbursementScreen()),
     GetPage(name: withdrawMethod, page: () => WithdrawMethodScreen(isFromDashboard: Get.parameters['is_from_dashboard'] == 'true')),
